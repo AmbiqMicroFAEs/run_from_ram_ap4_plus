@@ -1,0 +1,22 @@
+./objects/commontables.o: \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\CommonTables\CommonTables.c \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\CommonTables\arm_common_tables.c \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_math_types.h \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_compiler.h \
+  O:\Keil_v5\ARM\ARMCLANG\Bin\..\include\stdint.h \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\Core\Include\cmsis_armclang.h \
+  O:\Keil_v5\ARM\ARMCLANG\Bin\..\include\string.h \
+  O:\Keil_v5\ARM\ARMCLANG\Bin\..\include\math.h \
+  O:\Keil_v5\ARM\ARMCLANG\Bin\..\include\float.h \
+  O:\Keil_v5\ARM\ARMCLANG\Bin\..\include\limits.h \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_common_tables.h \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\fast_math_functions.h \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_math_memory.h \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\none.h \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\utils.h \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\basic_math_functions.h \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\CommonTables\arm_const_structs.c \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\arm_const_structs.h \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\transform_functions.h \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\DSP\Include\dsp\complex_math_functions.h \
+  O:\Keil_v5\Packs\ARM\CMSIS\5.9.0\CMSIS\DSP\Source\CommonTables\arm_mve_tables.c
