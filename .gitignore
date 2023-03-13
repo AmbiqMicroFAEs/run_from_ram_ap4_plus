@@ -1,0 +1,8 @@
+/.metadata/
+*.o
+*.d
+*.log
+*.obj
+
+
+

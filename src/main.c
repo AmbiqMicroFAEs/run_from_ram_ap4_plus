@@ -17,49 +17,21 @@
 //=============================================================================
 #define TIMER_NUM       0       // Timer number to be used in the example
 
-
-//=============================================================================
-//
-// DSP sin in RAM fucntion.
-//
-//=============================================================================
-#define RAM_SIN_SIZE	512
-//unsigned char ram_sin_buf[RAM_SIN_SIZE];
-//unsigned char *ram_sin_buf = (unsigned char*)0x10060000+1000; //System SRAM
-unsigned char *ram_sin_buf = (unsigned char*)0x10030000+1000; //TCM
-typedef float32_t (*ram_sin_t)(float32_t in); 
-ram_sin_t ram_func_sin;
-
-extern float32_t arm_sin_f32(float32_t); //to copy to RAM buffer
-
-
-
 //=============================================================================
 //
 // RAM function.
 //
 //=============================================================================
 #define RAM_FUNC_SIZE	512
+extern float32_t arm_sin_f32(float32_t); //CMSIS DSP sin()
+
+// Select the SRAM type used:
 //unsigned char ram_func_buf[RAM_FUNC_SIZE]; 
 //unsigned char *ram_func_buf = (unsigned char*)0x10060000+2000; //System SRAM
 unsigned char *ram_func_buf = (unsigned char*)0x10030000+2000; //TCM
+
 typedef float32_t (*ram_func_t)(float32_t in); 
 ram_func_t ram_func;
-
-float32_t ram_sin_test(float32_t in)
-{
-float32_t s;
-	
-	//
-	// Initlaize RAM func ptr
-	//
-	ram_func_sin = (ram_sin_t)&ram_sin_buf[1];	
-	
-	s = ram_func_sin(in);
-	
-return s;	
-}
-
 
 
 //=============================================================================
@@ -189,25 +161,18 @@ uint32_t	exec_time;
     //
     // Enable printing to the console.
     //
+		// Check the config in am_bsp.c:  static am_bsp_print_interface_e g_ePrintInterface = AM_BSP_PRINT_IF_UART;
+		//
     am_bsp_debug_printf_enable();
 		am_util_stdio_printf("\nApollo4 Plus run from RAM demo!\r\n");
 
-		//
-		// Copy the func to RAM buffer
-		//
-		memcpy(ram_func_buf,(void*)((uint32_t)&ram_sin_test & ~1),RAM_FUNC_SIZE);
+		am_util_delay_ms(1000);	
 		
 		//
 		// Cope the CMSIS DSP sin func to RAM buffer
 		//
-		memcpy(ram_sin_buf,(void*)((uint32_t)&arm_sin_f32 & ~1),RAM_SIN_SIZE);
+		memcpy(ram_func_buf,(void*)((uint32_t)&arm_sin_f32 & ~1),RAM_FUNC_SIZE);
 
-		//
-    // Loop forever.
-    //
-    while (1)
-    {
-		am_devices_led_toggle(am_bsp_psLEDs, 0);
 			
 		am_hal_timer_clear_stop(TIMER_NUM);
 	
@@ -217,26 +182,26 @@ uint32_t	exec_time;
 		ram_func = (ram_func_t)&ram_func_buf[1];
 					
 		//
-		//Calling SIN from RAM
+		//Calling SIN() from SRAM
 		//	
 		arg = 1.2;	
 		am_hal_timer_clear(TIMER_NUM);
 		s1 = ram_func(arg);
 		exec_time = am_hal_timer_read(TIMER_NUM);
 			
-		am_util_stdio_printf("\nRAM SIN Result: SIN(%f)= %f\r\n",arg,s1);
-		am_util_stdio_printf("RAM SIN exec time= %u\r\n",exec_time);			
+		am_util_stdio_printf("\nRAM (SRAM) SIN() Result: SIN(%f)= %f\r\n",arg,s1);
+		am_util_stdio_printf("RAM (SRAM) SIN() exec time= %u\r\n",exec_time);			
 			
 		//
-		//Calling SIN from MRAM	lib
+		//Calling SIN() from ROM (MRAM)
 		//	
 		arg = 1.2;		
 		am_hal_timer_clear(TIMER_NUM);	
 		s2 = arm_sin_f32(arg);
 		exec_time = am_hal_timer_read(TIMER_NUM);	
 			
-		am_util_stdio_printf("\nROM SIN Result: SIN(%f)= %f\r\n",arg,s2);		
-		am_util_stdio_printf("ROM SIN exec time= %u\r\n",exec_time);	
+		am_util_stdio_printf("\nROM (MRAM) SIN() Result: SIN(%f)= %f\r\n",arg,s2);		
+		am_util_stdio_printf("ROM (MRAM) SIN() exec time= %u\r\n",exec_time);	
 		
 		//
 		//Compare results
@@ -249,6 +214,15 @@ uint32_t	exec_time;
 				am_util_stdio_printf("\nRAM SIN and ROM SIN results match!\r\n");
 			}
  
+			
+			
+			
+		//
+    // Loop forever.
+    //
+    while (1)
+    {
+		am_devices_led_toggle(am_bsp_psLEDs, 0);
 		am_util_delay_ms(1000);	
     }
 
